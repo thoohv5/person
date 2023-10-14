@@ -1,0 +1,12 @@
+# 定时任务配置
+cron:
+  # 是否启用定时任务
+  common:
+    enable: true
+    debug: false
+
+  # 测试
+  demo:
+    # 测试
+    demo:
+      spec: "0 */1 * * * *"

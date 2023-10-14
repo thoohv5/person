@@ -1,0 +1,6 @@
+# 业务配置
+business:
+  # 公共模块
+  common:
+    # 环境: 0-dev,1-test,2-prod
+    env: 2

@@ -1,0 +1,24 @@
+# 日志配置
+logger:
+  # 日志输出方式，支持file,std,多个逗号隔开
+  out: "file"
+  # 日志级别，支持debug,info,warn,error
+  level: "info"
+  # 日志格式，支持json,text
+  type: "text"
+  # 默认：0-default, 1-simple
+  model: 0
+  # 日志文件配置
+  file:
+    # 日志文件路径
+    path: "/tmp"
+    # 日志文件名
+    fileName: "demo-interface.log"
+    # 日志文件最大大小，单位MB
+    maxSize: 100
+    # 日志文件最大备份数
+    maxBackups: 0
+    # 日志文件最大保存时间，单位天
+    maxAge: 30
+    # 是否压缩
+    compress: true

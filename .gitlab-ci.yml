@@ -1,0 +1,26 @@
+variables:
+  PROJECT_PATH: "app/interface"
+  TEST_CUSTOM_IP: 10.2.19.169
+  DEV_CUSTOM_IP: 10.2.19.145
+  CUSTOM_USERNAME: root
+  PASSWORD: zdns@knet.cn
+
+stages:
+  - dev
+  - pre
+  - lint
+  - test
+  - build
+  - deploy
+
+include:
+  - local: '/app/interface/demo-interface/.gitlab-ci.yml'
+
+ipam:deploy:
+  stage: dev
+  script:
+    - sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $CUSTOM_USERNAME@$DEV_CUSTOM_IP 'source /etc/profile;sh ~/trigger.sh $PROJECT_NAME'
+  tags:
+    - ipam
+  only:
+    - test

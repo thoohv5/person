@@ -1,0 +1,30 @@
+# ipam-interface config
+
+# 项目名称
+project_name: "ipam-interface"
+
+# 项目绝对路径
+project_abs_path: "/home/code/go/thoohv5/person/app/interface/ipam-interface"
+
+#项目模式
+project_mode: "ipam"
+
+config:
+  - name: "request"
+    registered_file: ""
+    path: "/api/http/request"
+  - name: "response"
+    registered_file: ""
+    path: "/api/http/response"
+  - name: "controller"
+    registered_file: "controller.go"
+    path: "/internal/controller"
+  - name: "service"
+    registered_file: "service.go"
+    path: "/internal/service"
+  - name: "repository"
+    registered_file: "repository.go"
+    path: "/internal/repository"
+  - name: "router"
+    registered_file: "router.go"
+    path: "/internal/router"

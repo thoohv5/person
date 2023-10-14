@@ -1,0 +1,93 @@
+.demo-interface_cache:
+  variables:
+    PROJECT_NAME: "demo-interface"
+  cache:
+    untracked: true
+    key: "${CI_COMMIT_REF_SLUG}"
+    paths:
+      - $PROJECT_PATH/$PROJECT_NAME/api/constant/enum/*_string.go
+      - $PROJECT_PATH/$PROJECT_NAME/api/docs/docs.go
+      - $PROJECT_PATH/$PROJECT_NAME/api/http/request/init.go
+      - $PROJECT_PATH/$PROJECT_NAME/api/docs/swagger.*
+      - $PROJECT_PATH/$PROJECT_NAME/**/*_gen.go
+      - $PROJECT_PATH/$PROJECT_NAME/internal/conf/*.pb.go
+      - $PROJECT_PATH/$PROJECT_NAME/internal/conf/*.pb.go
+      - $PROJECT_PATH/$PROJECT_NAME/mocks
+  tags:
+    - ipam
+  only:
+    changes:
+      - $PROJECT_PATH/$PROJECT_NAME/**/*
+      - internal/**/*
+      - pkg/**/*
+
+
+demo-interface:generate:
+  extends: .demo-interface_cache
+  stage: pre
+  script:
+    - cd $PROJECT_PATH/$PROJECT_NAME
+    - make setup
+    - make config
+    - make gen-all
+    - make wire
+    - make swag
+    - make format
+    - make mock-all
+    - make migration
+
+demo-interface:golang-lint:
+  extends: .demo-interface_cache
+  stage: lint
+  script:
+    - cd $PROJECT_PATH/$PROJECT_NAME
+    - make lint
+
+demo-interface:unit_tests:
+  extends: .demo-interface_cache
+  stage: test
+  script:
+    - cd $PROJECT_PATH/$PROJECT_NAME
+    - make test
+
+demo-interface:code_coverage:
+  extends: .demo-interface_cache
+  stage: test
+  script:
+    - cd $PROJECT_PATH/$PROJECT_NAME
+    - make cover
+
+demo-interface:build:
+  extends: .demo-interface_cache
+  stage: build
+  script:
+    - cd $PROJECT_PATH/$PROJECT_NAME
+    - make build
+    - while [ ! -f "./build/$PROJECT_NAME" ]; do sleep 1s;  done;
+    - sshpass -p $PASSWORD scp -o StrictHostKeyChecking=no -r ./build $CUSTOM_USERNAME@$TEST_CUSTOM_IP:/var/www/zdns/$PROJECT_NAME
+    - sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $CUSTOM_USERNAME@$TEST_CUSTOM_IP 'sh ~/trigger.sh $PROJECT_NAME'
+  artifacts:
+    name: $PROJECT_NAME
+    paths:
+      - $PROJECT_PATH/$PROJECT_NAME/build/*
+    expire_in: 1 week
+  only:
+    - master
+    - develop
+
+demo-interface:deploy:
+  extends: .demo-interface_cache
+  stage: deploy
+  script:
+    - cd $PROJECT_PATH/$PROJECT_NAME
+    - PID=`ps -ef|grep "$PROJECT_NAME server"|grep -v "grep"|awk '{print $2}'` && kill $PID
+    - set +e
+    - make yaml
+    - export ZDNS_http__enable_swag=true,bool && ./build/$PROJECT_NAME server --conf ./configs &
+    - sleep 2s
+    - make swagger-ci || EXIT_CODE=$?
+    - set -e
+    - PID=`ps -ef|grep "$PROJECT_NAME server"|grep -v "grep"|awk '{print $2}'` && kill $PID
+    - exit $EXIT_CODE
+  only:
+    - master

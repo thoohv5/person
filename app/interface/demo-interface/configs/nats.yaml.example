@@ -1,0 +1,40 @@
+# Nats配置
+nats:
+  # 基础配置
+  base:
+    # 连接地址
+    url:
+    #url: nats://127.0.0.1:4222
+    # 连接名称
+    client_name: nats-ipam
+    # 名称
+    user:
+    # 密码
+    password:
+    # 令牌
+    token:
+    # 最大重连次数
+    max_reconnect: 5
+    # 重连间隔--单位秒
+    reconnect_time_wait: 2
+    # 连接超时--单位秒
+    connect_timeout: 2
+    # 流所需配置
+    streams:
+    - name: file
+      storage: 0
+    - name: memory
+      storage: 1
+
+  # 生产所需配置
+  producers:
+    cdc:
+      subject: cdc.cdc
+    network_scan:
+      subject: memory.networkScan
+
+  # 消费者所需配置
+  consumers:
+    demo:
+      name: demo
+      subject: file.demo

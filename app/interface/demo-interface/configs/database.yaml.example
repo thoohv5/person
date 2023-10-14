@@ -1,0 +1,8 @@
+# 数据库配置
+database:
+  # 项目
+  demo-interface:
+    # 数据库驱动
+    driver: postgres
+    # 数据库连接
+    source: "postgres:password@127.0.0.1:5432/test?sslmode=disable"

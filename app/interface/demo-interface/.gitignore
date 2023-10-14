@@ -1,0 +1,33 @@
+build
+logs
+test-results
+
+api/docs/*
+!api/docs/README.md
+!api/docs/init.go
+
+configs/*.yaml
+
+# 常量
+api/constant/enum/*_string.go
+
+# 请求
+api/http/request/init.go
+
+# 多语言
+api/translate/locales/zh-CN
+!api/translate/locales/zh-CN/messages.gotext.json
+api/translate/init.go
+
+# wire
+cmd/command/wire_gen.go
+internal/service/wire_gen.go
+internal/service/ipaddress/classify/ipv4address/wire_gen.go
+internal/service/ipaddress/classify/ipv6address/wire_gen.go
+
+# 配置
+api/conf/conf.pb.go
+api/conf/conf_configs.pb.go
+
+# mock
+mocks/*
