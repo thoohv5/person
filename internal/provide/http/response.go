@@ -127,12 +127,6 @@ func getMsg(ctx context.Context, msgCode int) string {
 	switch msgCode {
 	case code.ErrDataNotExist.Code():
 		msg = localize.Translate(ctx, "以下数据不存在：")
-	case code.ErrNetworkConflict.Code():
-		msg = localize.Translate(ctx, "以下数据存在冲突：")
-	case code.ErrNetworkIllegal.Code():
-		msg = localize.Translate(ctx, "以下数据非法：")
-	case code.ErrExistRunningTask.Code():
-		msg = localize.Translate(ctx, "以下数据存在正在执行的任务：")
 	}
 
 	return msg
