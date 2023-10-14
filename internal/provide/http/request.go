@@ -9,6 +9,10 @@ type BaseRequest struct {
 	SortField string `form:"sortField,default=id" json:"sortField,default=id" default:"id"`
 	// 排序的方式，asc/desc
 	SortOrder string `form:"sortOrder,default=asc" json:"sortOrder,default=asc" default:"asc"`
+	// 排除Total
+	ExclusiveTotal bool `json:"exclusiveTotal" example:"false"`
+	// 排除List
+	ExclusiveList bool `json:"exclusiveList" example:"false"`
 	// Search 搜索条件
 	Search []Search `form:"search" json:"search"`
 }

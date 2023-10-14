@@ -9,9 +9,9 @@ import (
 
 var version string
 
-// @title						ZDNS ipplus ipam API
+// @title						Thooh demo API
 // @version					0.0.1
-// @description				this is zdns ipplus demo-interface project
+// @description				this is thooh demo-interface project
 // @securityDefinitions.apikey	ApiKeyAuth
 // @in							header
 // @name						X-User-Id

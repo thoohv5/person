@@ -17,8 +17,8 @@ var (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "demo-interface",
-	Short: "ipam进程",
-	Long:  `网络模块，IP模块，ID模块`,
+	Short: "demo进程",
+	Long:  `测试使用`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

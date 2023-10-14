@@ -95,7 +95,6 @@ func RegisterRouter(
 		rDemo.POST("", demo.Create)
 		rDemo.PUT("/:id", demo.Update)
 		rDemo.GET("", demo.List)
-		rDemo.GET("/all", demo.All)
 		rDemo.GET("/:id", demo.Detail)
 		rDemo.DELETE("/:id", demo.Delete)
 	}

@@ -21,8 +21,6 @@ type ServiceType string
 const (
 	// CommonServiceType 通用 01
 	CommonServiceType = "01"
-	// IPAMServiceType IPAM 03
-	IPAMServiceType = "03"
 )
 
 type ModuleType string
@@ -30,24 +28,6 @@ type ModuleType string
 const (
 	// CommonModuleType 通用 01
 	CommonModuleType = "01"
-	// NetworkModuleType 网络 02
-	NetworkModuleType = "02"
-	// DeviceModuleType 设备 03
-	DeviceModuleType = "03"
-	// IPModuleType 地址 04
-	IPModuleType = "04"
-	// ProbeModuleType 探针 05
-	ProbeModuleType = "05"
-	// TerminalModuleType 终端 06
-	TerminalModuleType = "06"
-	// AttributeModuleType 自定义属性 07
-	AttributeModuleType = "07"
-	// ImportExportModuleType 导入导出 08
-	ImportExportModuleType = "08"
-	// TaskModuleType 任务 09
-	TaskModuleType = "09"
-	// BusinessType 组织 09
-	BusinessType = "10"
 )
 
 // ErrType 错误类型

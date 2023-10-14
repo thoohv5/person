@@ -9,7 +9,6 @@ var (
 	// 通用 00
 	cc = &CCode{
 		PT: CommonProduceType,
-		ST: IPAMServiceType,
 		MT: CommonModuleType,
 		ET: CommonErrType,
 	}
@@ -23,7 +22,6 @@ var (
 	// 参数 01
 	cp = &CCode{
 		PT: CommonProduceType,
-		ST: IPAMServiceType,
 		MT: CommonModuleType,
 		ET: ParamErrType,
 	}
@@ -35,7 +33,6 @@ var (
 	// 网络 02
 	cn = &CCode{
 		PT: CommonProduceType,
-		ST: IPAMServiceType,
 		MT: CommonModuleType,
 		ET: NetworkErrType,
 	}
@@ -47,7 +44,6 @@ var (
 	// 数据库 03
 	cd = &CCode{
 		PT: CommonProduceType,
-		ST: IPAMServiceType,
 		MT: CommonModuleType,
 		ET: DatabaseErrType,
 	}
@@ -61,7 +57,6 @@ var (
 	// 文件 04
 	cf = &CCode{
 		PT: CommonProduceType,
-		ST: IPAMServiceType,
 		MT: CommonModuleType,
 		ET: FileErrType,
 	}
@@ -87,7 +82,6 @@ var (
 	// 其他 06
 	cr = &CCode{
 		PT: CommonProduceType,
-		ST: IPAMServiceType,
 		MT: CommonModuleType,
 		ET: OtherErrType,
 	}
