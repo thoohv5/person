@@ -6,11 +6,12 @@
 demo-interface # 项目名
     api # 文档与对外提供的数据结构
         constant # 常量
-            enum # 枚举，按照业务模块划分
+        enum # 枚举，按照业务模块划分
         docs # swagger文档
         http # HTTP服务
             request  # 请求结构体，按照业务模块划分
             response # 返回结构体，按照业务模块划分
+            rpc # http
         translate # 多语言
             locales # 本地化
                 en-GB # 英语
@@ -59,8 +60,8 @@ make help
 ### 项目工程化
 pkg/cmd/generate/README.md
 ```
-init-module -t 数据库表名 -tn 模块名称 -d 项目绝对路径 -p 项目名称
-init-module -t ip_address -tn IP地址 -d /Users/thooh/Projects/github.com/thoohv5/person/app/interface/demo-interface -p demo-interface
+ctrl -t 数据库表名 -tn 模块名称 -d 项目绝对路径 -p 项目名称
+ctrl -t ip_address -tn IP地址 -d /Users/thooh/Projects/github.com/thoohv5/person/app/interface/demo-interface -p demo-interface
 ```
 
 ### 配置拷贝
@@ -112,17 +113,6 @@ make mock
 ### 测试
 ```
 make test
-```
-
-### 测试覆盖率
-```
-make cover
-```
-
-### swaggerHTTP测试
-需要启动服务
-```
-make swagger-ci
 ```
 
 ### 项目编译

@@ -7,7 +7,7 @@ import (
 	"go/format"
 	"go/parser"
 	"go/token"
-	"io/ioutil"
+	"os"
 )
 
 func InitEnv(path string) (fset *token.FileSet, f *ast.File) {
@@ -46,5 +46,5 @@ func WriteToFile(fset *token.FileSet, f *ast.File, path string) error {
 	if err := format.Node(&buf, fset, f); err != nil {
 		return err
 	}
-	return ioutil.WriteFile(path, buf.Bytes(), 0755)
+	return os.WriteFile(path, buf.Bytes(), 0755)
 }

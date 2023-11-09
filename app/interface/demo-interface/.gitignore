@@ -9,7 +9,7 @@ api/docs/*
 configs/*.yaml
 
 # 常量
-api/constant/enum/*_string.go
+api/enum/*_string.go
 
 # 请求
 api/http/request/init.go

@@ -3,7 +3,7 @@ variables:
   TEST_CUSTOM_IP: 10.2.19.169
   DEV_CUSTOM_IP: 10.2.19.145
   CUSTOM_USERNAME: root
-  PASSWORD: zdns@knet.cn
+  PASSWORD: password
 
 stages:
   - dev

@@ -9,7 +9,7 @@ import (
 var ProviderSet = wire.NewSet(
 	RegisterConfig,
 	RegisterLogger,
-	RegisterDatabase,
+	RegisterDB,
 	RegisterRedis,
 	RegisterCron,
 	RegisterNatsProducer,

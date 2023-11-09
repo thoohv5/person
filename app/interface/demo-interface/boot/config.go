@@ -8,7 +8,9 @@ import (
 )
 
 // RegisterConfig 注册Config
-func RegisterConfig(dir constant.ConfigPath) (config.Config, func(), error) {
+func RegisterConfig(
+	dir constant.ConfigPath,
+) (config.Config, func(), error) {
 	cf, err := config.New(dir.String())
 	if nil != err {
 		return nil, nil, err

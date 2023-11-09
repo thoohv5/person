@@ -84,8 +84,6 @@ demo-interface:deploy:
     - set +e
     - make yaml
     - export ZDNS_http__enable_swag=true,bool && ./build/$PROJECT_NAME server --conf ./configs &
-    - sleep 2s
-    - make swagger-ci || EXIT_CODE=$?
     - set -e
     - PID=`ps -ef|grep "$PROJECT_NAME server"|grep -v "grep"|awk '{print $2}'` && kill $PID
     - exit $EXIT_CODE

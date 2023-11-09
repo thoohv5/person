@@ -1,27 +1,6 @@
 package util
 
-import (
-	"strings"
-)
-
-// IString .
-type IString string
-
-// InitialUpper 首字母转大写
-func InitialUpper(s string) string {
-	if len(s) > 0 {
-		return strings.ToUpper(string(s[0])) + s[1:]
-	}
-	return s
-}
-
-// InitialLower 首字母转小写
-func InitialLower(s string) string {
-	if len(s) > 0 {
-		return strings.ToLower(string(s[0])) + s[1:]
-	}
-	return s
-}
+import "strings"
 
 // UpperCamelName 大驼峰
 func UpperCamelName(s string) string {

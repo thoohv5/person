@@ -51,52 +51,27 @@ RPC_GO_FILES         := $(shell cd $(PROJECT_DIR); [ -d "$(PREFIX)/api/http/rpc"
 
 GOLANGCI_LINT			?= $(GOPATH)/bin/golangci-lint
 GOLANGCI_LINT_OPTS		?=
-GOCOV                   ?= $(GOPATH)/bin/gocov
-GOCOV_HTML              ?= $(GOPATH)/bin/gocov-html
 GOIMPORTS               ?= $(GOPATH)/bin/goimports
-GOTESTSUM				?= $(GOPATH)/bin/gotestsum
 GOSWAG             		?= $(GOPATH)/bin/swag
-GOSWAGGER_CI            ?= $(GOPATH)/bin/swagger-ci
 GOWIRE             	    ?= $(GOPATH)/bin/wire
-GOGENNA             	?= $(GOPATH)/bin/genna
 MOCKGEN             	?= $(GOPATH)/bin/mockgen
-REGISTERFIELD           ?= $(GOPATH)/bin/register-field
+REGISTERFIELD           ?= $(GOPATH)/bin/field
 
 $(GOLANGCI_LINT): $(GO_MOD)
 	@echo "> installing golangci-lint"
-	@$(GO) install "github.com/golangci/golangci-lint/cmd/golangci-lint@v1.44.2"
-
-$(GOCOV): $(GO_MOD)
-	@echo "> installing gocov"
-	@$(GO) install "github.com/axw/gocov/gocov"
-
-$(GOCOV_HTML): $(GO_MOD)
-	@echo "> installing gocov-html"
-	@$(GO) install "github.com/matm/gocov-html/cmd/gocov-html@latest"
+	@$(GO) install "github.com/golangci/golangci-lint/cmd/golangci-lint"
 
 $(GOIMPORTS): $(GO_MOD)
 	@echo "> installing goimports"
 	@$(GO) install "golang.org/x/tools/cmd/goimports"
 
-$(GOTESTSUM): $(GO_MOD)
-	@echo "> installing gotestsum"
-	@$(GO) install "gotest.tools/gotestsum"
-
 $(GOSWAG): $(GO_MOD)
 	@echo "> installing swag"
 	@$(GO) install "github.com/swaggo/swag/cmd/swag@v1.8.9"
 
-$(GOSWAGGER_CI): $(GO_MOD)
-	@echo "> installing swagger-ci"
-	@$(GO) install "github.com/thoohv5/swagger-ci/cmd/swagger-ci"
-
 $(GOWIRE): $(GO_MOD)
 	@echo "> installing wire"
 	@$(GO) install "github.com/google/wire/cmd/wire@v0.5.0"
-
-$(GOGENNA): $(GO_MOD)
-	@echo "> installing converter"
-	@$(GO) install "github.com/dizzyfool/genna"
 
 $(MOCKGEN): $(GO_MOD)
 	@echo "> installing mockgen"
@@ -104,7 +79,7 @@ $(MOCKGEN): $(GO_MOD)
 
 $(REGISTERFIELD):
 	@echo "> installing registerfield"
-	@pushd $(APP_DIR)/pkg/cmd ;$(GO) install ./...; popd
+	@pushd $(APP_DIR)/pkg/cmd/field ;$(GO) install ./...; popd
 
 # 提取文件路径的文件名
 filename = $(notdir $(1))
@@ -155,11 +130,6 @@ $(GOTEST_DIR):
 	@mkdir -p $@
 
 
-coverprofile-txt = $(GOTEST_DIR)/coverage.txt
-coverprofile-json = $(GOTEST_DIR)/coverage.json
-coverreport-html = $(GOTEST_DIR)/coverage.html
-cover-flags = -coverprofile=$(coverprofile-txt) -covermode=atomic
-
 .PHONY: common-gen
 common-gen:
 	@#$(GO) generate ./...
@@ -171,14 +141,6 @@ common-gen:
 common-gen-all:
 	@$(foreach dir, $(shell ls -d $(APP_DIR)/app/interface/*), pushd $(dir) && make gen && popd;)
 
-.PHONY: common-cover
-common-cover: $(GOTESTSUM) $(GOCOV) $(GOCOV_HTML) | $(GOTEST_DIR)
-	@echo ">> running test coverage"
-#	@$(GOTESTSUM) --format testname --junitfile $(GOTEST_DIR)/unit-tests.xml -- \
-#			$(test-flags) $(cover-flags) $(test-pkgs) && \
-#		$(GOCOV) convert $(coverprofile-txt) >$(coverprofile-json) && \
-#		$(GOCOV) report $(coverprofile-json) && \
-#		$(GOCOV_HTML) $(GOTEST_DIR)/coverage.json >$(GOTEST_DIR)/coverage.html
 
 .PHONY: common-lint
 common-lint: $(GOLANGCI_LINT)
@@ -228,10 +190,6 @@ common-swag: $(GOSWAG) $(REGISTERFIELD)
 	@$(REGISTERFIELD) -d $(PREFIX)/api/http/request
 	@$(MAKE) format
 	@echo "\033[32m >> ${PROJECT_NAME}接口文档已生成 \033[0m"
-
-.PHONY: common-swagger-ci
-common-swagger-ci: $(GOSWAGGER_CI)
-	@$(GOSWAGGER_CI)
 
 .PHONY: common-migration
 common-migration:

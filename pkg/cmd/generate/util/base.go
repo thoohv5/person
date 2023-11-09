@@ -26,7 +26,7 @@ func GenParam(dir, project, table, tableName string) (*BaseParam, *TableWrapper)
 		Table:   table,
 		Package: strings.ReplaceAll(table, "_", ""),
 	}
-	upperCamelName := CamelCase(table)
+	upperCamelName := UpperCamelName(table)
 	camelName := strings.ToLower(upperCamelName[:1]) + upperCamelName[1:]
 	param := &TableWrapper{
 		Name:          table,
@@ -84,7 +84,7 @@ func GenDao(dir, table string, tpl map[string]string) error {
 }
 
 func RegController(fst *token.FileSet, f *ast.File, table string, regPath string) error {
-	upperCamlName := CamelCase(table)
+	upperCamlName := UpperCamelName(table)
 
 	// 往ProviderSet注入参数
 	ret := astutil2.AddValueToCaller(f, "ProviderSet", fmt.Sprintf("\n\tNew%s", upperCamlName))
@@ -99,7 +99,7 @@ func RegController(fst *token.FileSet, f *ast.File, table string, regPath string
 }
 
 func RegService(fst *token.FileSet, f *ast.File, table string, regPath string) error {
-	upperCamlName := CamelCase(table)
+	upperCamlName := UpperCamelName(table)
 
 	// 往ProviderSet注入参数
 	ret := astutil2.AddValueToCaller(f, "ProviderSet", fmt.Sprintf("\n\tNew%s", upperCamlName))

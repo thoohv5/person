@@ -1,7 +1,6 @@
 package astutil
 
 import (
-	"fmt"
 	"go/ast"
 	"go/token"
 )
@@ -287,23 +286,4 @@ func isVarExist(f *ast.File, name string) int {
 		}
 	}
 	return ret
-}
-
-func ParseVariable(f *ast.File, varName string) bool {
-	for _, decl := range f.Decls {
-		gen, ok := decl.(*ast.GenDecl)
-		if ok && gen.Tok == token.VAR {
-			vs := gen.Specs[0].(*ast.ValueSpec)
-			for k, varIdent := range vs.Names {
-				if varIdent.Name == varName {
-					varValue := vs.Values[k]
-					fmt.Printf("GenDecl=>%#v\n", gen)
-					fmt.Printf("ValueSpec=>%#v\n", vs)
-					fmt.Printf("Ident=>%#v\n", varIdent)
-					fmt.Printf("Expr=>%#v\n", varValue)
-				}
-			}
-		}
-	}
-	return true
 }

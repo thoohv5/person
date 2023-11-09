@@ -6,8 +6,7 @@ import (
 	"github.com/thoohv5/person/app/interface/demo-interface/boot"
 	im "github.com/thoohv5/person/app/interface/demo-interface/migrations"
 	"github.com/thoohv5/person/internal/constant"
-	"github.com/thoohv5/person/internal/provide/database"
-	"github.com/thoohv5/person/internal/util"
+	"github.com/thoohv5/person/internal/provide/db"
 )
 
 // serverCmd represents the base command when called without any subcommands
@@ -33,16 +32,7 @@ var migrationCmd = &cobra.Command{
 		if err != nil {
 			return
 		}
-		collection, err := im.GetCollection(util.Strikethrough2Underline(boot.Name))
-		if err != nil {
-			return
-		}
-		// 数据库创建
-		db, ok := config.GetDatabase()[boot.Name]
-		if !ok {
-			return
-		}
-		_, cleanDB, err := database.New(db, log, database.WithCommand(args...), database.WithCollection(collection))
+		_, cleanDB, err := db.New(config.GetDatabase(), log, db.WithApplicationName(boot.Name), db.WithCommand(args...), db.WithCollection(im.GetCollection))
 		if err != nil {
 			return
 		}

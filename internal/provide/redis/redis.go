@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"go.opentelemetry.io/otel"
 
 	"github.com/thoohv5/person/internal/provide/logger"
 	"github.com/thoohv5/person/pkg/log"
@@ -37,7 +36,6 @@ func NewRedis(rc *Config, log log.Logger) (IRedis, func(), error) {
 		MinIdleConns: int(rc.GetMaxIdle()),
 	})
 
-	r.AddHook(NewHook(otel.Tracer("github.com/go-redis/redis")))
 	dr.r = r
 
 	return dr, func() {

@@ -8,6 +8,9 @@ import (
 )
 
 // RegisterRedis 注册Redis
-func RegisterRedis(conf config.Config, log log.Logger) (predis.IRedis, func(), error) {
+func RegisterRedis(
+	conf config.Config,
+	log log.Logger,
+) (predis.IRedis, func(), error) {
 	return predis.NewRedis(conf.GetRedis(), log)
 }

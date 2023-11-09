@@ -11,6 +11,7 @@ import (
 
 	"github.com/go-pg/pg/v10"
 	"github.com/go-pg/pg/v10/orm"
+	"github.com/samber/lo"
 
 	"github.com/thoohv5/person/internal/util"
 )
@@ -68,7 +69,7 @@ func (m *BaseModel) BeforeInsert(ctx context.Context) (context.Context, error) {
 var _ pg.BeforeUpdateHook = (*BaseModel)(nil)
 
 func (m *BaseModel) BeforeUpdate(ctx context.Context) (context.Context, error) {
-	if len(m.IsIgnoreUpdate) == 0 || !util.InArrStr(m.IsIgnoreUpdate, "updated_time") {
+	if len(m.IsIgnoreUpdate) == 0 || !lo.Contains(m.IsIgnoreUpdate, "updated_time") {
 		m.UpdatedTime = time.Now()
 	}
 	return ctx, nil

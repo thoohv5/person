@@ -9,13 +9,13 @@ import (
 
 var version string
 
-// @title						Thooh demo API
-// @version					0.0.1
-// @description				this is thooh demo-interface project
-// @securityDefinitions.apikey	ApiKeyAuth
-// @in							header
-// @name						X-User-Id
-// @BasePath					/
+//	@title						Thooh demo API
+//	@version					0.0.1
+//	@description				this is thooh demo-interface project
+//	@securityDefinitions.apikey	ApiKeyAuth
+//	@in							header
+//	@name						X-User-Id
+//	@BasePath					/
 func main() {
 	docs.SetVersion(util.Strikethrough2Underline(boot.Name), version)
 	command.Execute(version)

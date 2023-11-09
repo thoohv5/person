@@ -25,7 +25,7 @@ const (
 	// Denotes that the value as been copied
 	hasCopied
 
-	// Some default converter types for a nicer syntax
+	// String Some default converter types for a nicer syntax
 	String  string  = ""
 	Bool    bool    = false
 	Int     int     = 0

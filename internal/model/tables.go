@@ -11,7 +11,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/thoohv5/person/internal/util"
+	"github.com/samber/lo"
 )
 
 // TableNameFromFilesystem 从文件系统中获取表名
@@ -93,6 +93,6 @@ func GetTables(models []interface{}, sQLMigrations embed.FS) (tableNames []strin
 	} else {
 		fmt.Printf("get table name from filesystem err: %v\n", err)
 	}
-	tableNames = util.UniqStrArr(tableNames)
+	tableNames = lo.Uniq(tableNames)
 	return
 }

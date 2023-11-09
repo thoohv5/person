@@ -46,7 +46,7 @@ func initCron(dir constant.ConfigPath) ([]pcron.ICron, func(), error) {
 		wire.Build(
 			boot.RegisterConfig,
 			boot.RegisterLogger,
-			// boot.RegisterDatabase,
+			// boot.RegisterDB,
 			// repository.ProviderSet,
 			// boot.RegisterRedis,
 			// boot.RegisterNatsProducer,
@@ -98,7 +98,7 @@ func InitModule(dir constant.ConfigPath, producer nats.IProducer) (*Module, func
 		wire.Build(
 			boot.RegisterConfig,
 			boot.RegisterLogger,
-			boot.RegisterDatabase,
+			boot.RegisterDB,
 			boot.RegisterRedis,
 			repository.ProviderSet,
 			service.ProviderSet,

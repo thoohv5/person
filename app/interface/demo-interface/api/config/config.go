@@ -8,7 +8,7 @@ package config
 
 import (
 	"github.com/thoohv5/person/internal/provide/cron"
-	"github.com/thoohv5/person/internal/provide/database"
+	"github.com/thoohv5/person/internal/provide/db"
 	"github.com/thoohv5/person/internal/provide/http"
 	"github.com/thoohv5/person/internal/provide/logger"
 	"github.com/thoohv5/person/internal/provide/nats"
@@ -24,7 +24,7 @@ type IBootstrap interface {
 	// 日志配置
 	GetLogger() *logger.Config
 	// 数据配置
-	GetDatabase() map[string]*database.Config
+	GetDatabase() map[string]*db.Config
 	// Redis 配置
 	GetRedis() *redis.Config
 	// Cron 配置
@@ -44,7 +44,7 @@ type Bootstrap struct {
 	// 日志配置
 	Logger *logger.Config `json:"logger,omitempty"`
 	// 数据配置
-	Database map[string]*database.Config `json:"database"`
+	Database map[string]*db.Config `json:"database"`
 	// Redis 配置
 	Redis *redis.Config `json:"redis,omitempty"`
 	// Cron 配置
@@ -91,7 +91,7 @@ func (x *Bootstrap) GetLogger() *logger.Config {
 	return nil
 }
 
-func (x *Bootstrap) GetDatabase() map[string]*database.Config {
+func (x *Bootstrap) GetDatabase() map[string]*db.Config {
 	if x != nil {
 		return x.Database
 	}
