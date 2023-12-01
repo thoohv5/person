@@ -22,7 +22,7 @@ type base struct {
 }
 
 const (
-	_label      = "ZDNS"
+	_label      = "THOOH"
 	_defaultTag = "header"
 )
 

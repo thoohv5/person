@@ -3,36 +3,29 @@ package db
 import (
 	"context"
 	"reflect"
-	"runtime"
 	"strings"
 
 	"github.com/go-pg/pg/v10"
-	"github.com/go-pg/pg/v10/orm"
 
 	"github.com/thoohv5/person/pkg/log"
 )
 
-type queryOperation interface {
-	Operation() orm.QueryOp
-}
-
-// LoggerHook is a pg.QueryHook that adds OpenTelemetry instrumentation.
-type LoggerHook struct {
+// tracingHook is a pg.QueryHook that adds OpenTelemetry instrumentation.
+type loggerHook struct {
 	log.Logger
 }
 
-func NewTracingHook() *LoggerHook {
-	return new(LoggerHook)
+func NewLoggerHook(logger log.Logger) pg.QueryHook {
+	return &loggerHook{Logger: logger}
 }
 
-var _ pg.QueryHook = (*LoggerHook)(nil)
+var _ pg.QueryHook = (*loggerHook)(nil)
 
-func (h *LoggerHook) BeforeQuery(ctx context.Context, _ *pg.QueryEvent) (context.Context, error) {
+func (h *loggerHook) BeforeQuery(ctx context.Context, qe *pg.QueryEvent) (context.Context, error) {
 	return ctx, nil
 }
 
-func (h *LoggerHook) AfterQuery(ctx context.Context, evt *pg.QueryEvent) error {
-
+func (h *loggerHook) AfterQuery(ctx context.Context, evt *pg.QueryEvent) error {
 	formattedQuery, err := evt.FormattedQuery()
 	if err != nil {
 		return err
@@ -73,30 +66,4 @@ func (h *LoggerHook) AfterQuery(ctx context.Context, evt *pg.QueryEvent) error {
 	})
 
 	return nil
-}
-
-func funcFileLine(pkg string) (string, string, int) {
-	const depth = 16
-	var pcs [depth]uintptr
-	n := runtime.Callers(3, pcs[:])
-	ff := runtime.CallersFrames(pcs[:n])
-
-	var fn, file string
-	var line int
-	for {
-		f, ok := ff.Next()
-		if !ok {
-			break
-		}
-		fn, file, line = f.Function, f.File, f.Line
-		if !strings.Contains(fn, pkg) {
-			break
-		}
-	}
-
-	if ind := strings.LastIndexByte(fn, '/'); ind != -1 {
-		fn = fn[ind+1:]
-	}
-
-	return fn, file, line
 }

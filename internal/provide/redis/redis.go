@@ -20,7 +20,6 @@ type defaultRedis struct {
 }
 
 func NewRedis(rc *Config, log log.Logger) (IRedis, func(), error) {
-
 	dr := &defaultRedis{
 		log: log,
 	}
@@ -36,6 +35,7 @@ func NewRedis(rc *Config, log log.Logger) (IRedis, func(), error) {
 		MinIdleConns: int(rc.GetMaxIdle()),
 	})
 
+	r.AddHook(NewTracingHook())
 	dr.r = r
 
 	return dr, func() {

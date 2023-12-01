@@ -85,3 +85,30 @@ func LowerCameName(s string) string {
 func Strikethrough(s string) string {
 	return strings.ReplaceAll(s, "_", "-")
 }
+
+// 特殊字段
+var special = map[string]string{
+	"ID":  "Id",
+	"IP":  "Ip",
+	"OUI": "Oui",
+}
+
+// Camel2Underline 驼峰转下划线
+func Camel2Underline(s string) string {
+	var result []rune
+	for k, v := range special {
+		s = strings.ReplaceAll(s, k, v)
+	}
+	for i, v := range s {
+		if i > 0 && v >= 'A' && v <= 'Z' {
+			result = append(result, '_')
+		}
+		result = append(result, v)
+	}
+	return strings.ToLower(string(result))
+}
+
+// Strikethrough2Underline 中划线转下划线
+func Strikethrough2Underline(s string) string {
+	return strings.ReplaceAll(s, "-", "_")
+}

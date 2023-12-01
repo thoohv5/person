@@ -11,6 +11,7 @@ import (
 
 	"github.com/thoohv5/person/app/interface/demo-interface/internal/repository/demo"
 	"github.com/thoohv5/person/internal/model"
+	"github.com/thoohv5/person/internal/util"
 )
 
 var (
@@ -29,7 +30,8 @@ func GetTables() []string {
 
 // GetCollection 获取collection
 func GetCollection(tableName string) (*migrations.Collection, error) {
-	collection := migrations.NewCollection().SetTableName(tableName).DisableSQLAutodiscover(true)
+	tn := util.Strikethrough2Underline(tableName)
+	collection := migrations.NewCollection().SetTableName(tn).DisableSQLAutodiscover(true)
 	collection.MustRegisterTx(func(db migrations.DB) error {
 		for _, m := range models {
 			if err := db.Model(m).CreateTable(&orm.CreateTableOptions{
@@ -50,5 +52,6 @@ func GetCollection(tableName string) (*migrations.Collection, error) {
 	if err := collection.DiscoverSQLMigrationsFromFilesystem(http.FS(sQLMigrations), "/"); err != nil {
 		return nil, fmt.Errorf("sql migrations err: %w", err)
 	}
+
 	return collection, nil
 }

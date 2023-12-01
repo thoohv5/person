@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/go-pg/migrations/v8"
-	"github.com/go-pg/pg/extra/pgotel/v10"
 	"github.com/go-pg/pg/v10"
 
 	"github.com/thoohv5/person/internal/provide/logger"
@@ -45,7 +44,7 @@ func New(dbConfigs map[string]*Config, log log.Logger, opts ...Option) (pg.DBI, 
 
 	dbConfig := dbc
 
-	opt, err := pg.ParseURL(fmt.Sprintf("%s://%s", dbConfig.GetDriver(), dbConfig.GetSource()))
+	opt, err := pg.ParseURL(fmt.Sprintf("%s://%s&application_name=%s", dbConfig.GetDriver(), dbConfig.GetSource(), an))
 	if err != nil {
 		log.Errorc(context.Background(), "db Connect err", logger.FieldError(err), logger.FieldInterface("config", dbConfig))
 		return nil, nil, err
@@ -65,9 +64,8 @@ func New(dbConfigs map[string]*Config, log log.Logger, opts ...Option) (pg.DBI, 
 	}
 
 	db := pg.Connect(opt)
-	db.AddQueryHook(pgotel.NewTracingHook())
-	db.AddQueryHook(&LoggerHook{log})
-	// db.AddQueryHook(pgdebug.NewDebugHook())
+	db.AddQueryHook(NewTracingHook())
+	db.AddQueryHook(NewLoggerHook(log))
 
 	if o.collection != nil {
 		// 获取收集

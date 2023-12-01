@@ -79,7 +79,7 @@ $(MOCKGEN): $(GO_MOD)
 
 $(REGISTERFIELD):
 	@echo "> installing registerfield"
-	@pushd $(APP_DIR)/pkg/cmd/field ;$(GO) install ./...; popd
+	@pushd $(APP_DIR)/pkg/cmd/generate/field ;$(GO) install ./...; popd
 
 # 提取文件路径的文件名
 filename = $(notdir $(1))

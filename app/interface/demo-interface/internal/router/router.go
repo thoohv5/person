@@ -73,10 +73,10 @@ func InitHTTP(
 	}
 
 	if hConfig.GetEnableSwag() {
-		relativePath := fmt.Sprintf("/%s/%s/*any", boot.Name, util.Strikethrough(boot.Name))
+		relativePath := fmt.Sprintf("/%s/%s/*any", boot.Name, util.Strikethrough2Underline(boot.Name))
 		fmt.Printf("swagger url: %s%s\n", conf.GetHttp().GetAddr(), relativePath)
 		engine.GET(relativePath, ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.DefaultModelsExpandDepth(-1), func(config *ginSwagger.Config) {
-			config.InstanceName = util.Strikethrough(boot.Name)
+			config.InstanceName = util.Strikethrough2Underline(boot.Name)
 		}))
 	}
 

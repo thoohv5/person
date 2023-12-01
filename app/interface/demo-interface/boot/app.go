@@ -1,6 +1,8 @@
 package boot
 
 import (
+	"time"
+
 	"github.com/thoohv5/person/internal/provide/cron"
 	"github.com/thoohv5/person/internal/provide/nats"
 	"github.com/thoohv5/person/pkg"
@@ -29,6 +31,7 @@ func InitApp(
 	return pkg.New(
 		pkg.Name(Name),
 		pkg.Logger(logger),
+		pkg.StopTimeout(3*time.Second),
 		pkg.Server(
 			append([]transport.Server{hs, cs, np}, as...)...,
 		),
